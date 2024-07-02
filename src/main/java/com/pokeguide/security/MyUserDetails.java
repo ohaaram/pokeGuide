@@ -1,6 +1,6 @@
-package kr.co.orangenode.security;
+package com.pokeguide.security;
 
-import kr.co.orangenode.entity.user.User;
+import com.pokeguide.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

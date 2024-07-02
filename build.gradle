@@ -37,6 +37,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    implementation 'org.modelmapper:modelmapper:3.1.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -52,3 +54,23 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+springBoot {
+    buildInfo()
+}
+tasks.named('jar'){
+    enabled = false
+}
+// QueryDSL 설정 - main 하위에 Querydsl 생성 설정
+def querydslDir = "src/main/generated"
+sourceSets {
+    main.java.srcDir querydslDir
+}
+// Qclass 파일 생성 위치 설정
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslDir)
+}
+clean {
+    delete file(querydslDir)
+}
+

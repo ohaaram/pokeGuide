@@ -1,7 +1,8 @@
-package kr.co.orangenode.security;
+package com.pokeguide.security;
 
-import kr.co.orangenode.entity.user.User;
-import kr.co.orangenode.repository.user.UserRepository;
+
+import com.pokeguide.entity.User;
+import com.pokeguide.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

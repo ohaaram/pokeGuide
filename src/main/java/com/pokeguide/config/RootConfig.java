@@ -1,4 +1,4 @@
-package kr.co.orangenode.config;
+package com.pokeguide.config;
 
 
 import lombok.Getter;

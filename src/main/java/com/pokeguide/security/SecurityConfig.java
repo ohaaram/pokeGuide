@@ -1,6 +1,6 @@
-package kr.co.orangenode.security;
+package com.pokeguide.security;
 
-import kr.co.orangenode.oauth2.OAuth2UserService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,6 @@ import java.util.List;
 public class SecurityConfig {
 
     private final SecurityUserService securityUserService;
-    private final OAuth2UserService oauth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -39,10 +38,7 @@ public class SecurityConfig {
                 .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                .httpBasic(HttpBasicConfigurer::disable)
-                .oauth2Login(oauth2Login -> oauth2Login
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(oauth2UserService)));
+                .httpBasic(HttpBasicConfigurer::disable);
 
         httpSecurity.logout(logout -> logout
                 .invalidateHttpSession(true)
@@ -62,10 +58,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
