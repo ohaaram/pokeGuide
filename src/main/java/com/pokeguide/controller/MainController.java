@@ -21,8 +21,4 @@ public class MainController {
 
         return ResponseEntity.status(HttpStatus.OK).body("안녕");
     }
-
-    
-
-
 }
