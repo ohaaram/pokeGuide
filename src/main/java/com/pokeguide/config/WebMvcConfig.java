@@ -23,8 +23,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     //@Value("${MyServerImg.static-resources-pathImg}")
     //private String staticServerPathImg;
 
-    //@Value("${front.url}")
-    //private String frontUrl;
+    @Value("${front.url}")
+    private String frontUrl;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -45,11 +45,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                //.allowedOriginPatterns(frontUrl, "http://3.34.204.24","http://ec2-3-34-204-24.ap-northeast-2.compute.amazonaws.com")
+                .allowedOriginPatterns(frontUrl)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("Authorization", "Cache-Control", "Content-Type", "X-Requested-With", "Origin", "Accept","Access-Control-Allow-Origin")
-                .allowCredentials(true)
-                .allowedOriginPatterns("*");
+                .allowCredentials(true);
+                // .allowedOriginPatterns("*");
     }
 
     @Bean
