@@ -23,8 +23,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     //@Value("${MyServerImg.static-resources-pathImg}")
     //private String staticServerPathImg;
 
-    //@Value("${front.url}")
-    //private String frontUrl;
+    @Value("${front.url}")
+    private String frontUrl;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
