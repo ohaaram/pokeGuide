@@ -5,7 +5,7 @@ logging:
             resultsettable: info
             sqlonly: info
             sqltiming: info
-        root: error
+        root: info
 
 mybatis:
     mapper-locations: classpath:mappers/**/*.xml
@@ -21,7 +21,7 @@ spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: Abcd1234!
-        url: jdbc:mysql://3.36.119.194/pokeguide
+        url: jdbc:mysql://3.34.158.6/pokeguide
         username: poke
 
     data:
@@ -68,8 +68,8 @@ file:
     upload:
         path: uploads/
 
-#front:
-    #url: 'http://localhost:3000'        # 개발용
+front:
+    url: 'http://localhost:3000'        # 개발용
     #url: 'http://15.165.24.202' # 배포용
 
 
