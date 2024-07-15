@@ -19,9 +19,11 @@ public class User {
     private String uid;
     private String name;
     private String pass;
+    private String nick;
     private String role;
     private String gender;
     private String email;
     private String address;
+    private String profile;
 
 }
