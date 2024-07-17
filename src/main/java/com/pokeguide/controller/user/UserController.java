@@ -1,4 +1,4 @@
-package com.pokeguide.controller;
+package com.pokeguide.controller.user;
 
 import com.pokeguide.dto.UserDTO;
 import com.pokeguide.entity.User;
@@ -22,10 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-    @Controller
+    @RestController
     @Slf4j
     @RequiredArgsConstructor
-    @Log4j2
     public class UserController {
 
     private final UserService userService;
@@ -109,5 +108,7 @@ import java.util.Map;
 
         return userService.updateUserInfo(userDTO);
     }
+
+
 
 }

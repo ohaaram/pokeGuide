@@ -35,6 +35,13 @@ public class UserService {
     private final UserMapper userMapper;
     private final JWTProvider jwtProvider;
 
+
+    // 이메일 중복 체크
+    public boolean isEmailDuplicated(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.isPresent();
+    }
+
     // 회원가입 //
     public User register(UserDTO userDTO) {
         log.info("Registering user: {}", userDTO);
