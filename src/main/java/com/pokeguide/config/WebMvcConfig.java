@@ -34,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // 이미지 경로
         registry.addResourceHandler("/prodImg/**")
-                .addResourceLocations("file:prodImg/"); // file => C://
+                .addResourceLocations("file:prodImg/");
 
         // 추가할 새로운 리소스 핸들러
         registry.addResourceHandler("/newStaticResources/**")
@@ -45,10 +45,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("Authorization", "Cache-Control", "Content-Type", "X-Requested-With", "Origin", "Accept","Access-Control-Allow-Origin")
-                .allowCredentials(true)
-                .allowedOriginPatterns("*");
+                .allowCredentials(true);
+
     }
 
     @Bean
