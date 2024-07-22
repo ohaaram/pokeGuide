@@ -58,7 +58,7 @@ public class EmailCheckService {
         // 인증코드를 Base64로 암호화
         String encryptedCode = Base64.getEncoder().encodeToString(codeStr.getBytes());
 
-        String title = "orangeNode 인증코드 입니다.";
+        String title = "^pokeGuide^ 인증코드 입니다.";
         String content = "<h1>인증코드는 " + codeStr + " 입니다.</h1>"; // 실제 코드 전송
         log.info("encryptedContent 체크 : " + encryptedCode);
 
