@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @Setter
@@ -26,5 +27,8 @@ public class User {
     private String email;
     private String address;
     private String profile;
+
+    @CreationTimestamp
+    private String createDate;
 
 }
