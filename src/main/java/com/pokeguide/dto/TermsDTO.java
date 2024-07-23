@@ -15,4 +15,5 @@ public class TermsDTO {
 
     public String terms;
     public String privacy;
+    public String sms;
 }

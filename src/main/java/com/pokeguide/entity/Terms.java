@@ -18,4 +18,5 @@ public class Terms {
     @Id
     public String terms;
     public String privacy;
+    public String sms;
 }
