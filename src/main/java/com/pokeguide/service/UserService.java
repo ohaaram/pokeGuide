@@ -59,6 +59,7 @@ public class UserService {
         return savedUser;
     }
 
+
     /* 내 설정 수정 */
     public ResponseEntity<?> updateUserInfo(UserDTO userDTO) {
 
@@ -157,5 +158,6 @@ public class UserService {
                 .toFile(new File(path, "myImg" + sName));
         return "myImg" + sName;
     }
+
 
 }

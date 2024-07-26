@@ -28,6 +28,7 @@ import java.util.Map;
     public class UserController {
 
     private final UserService userService;
+
     private final AuthenticationManager authenticationManager;
     private final JWTProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
@@ -86,6 +87,8 @@ import java.util.Map;
     }
 
 
+
+
     // 사용자 비밀번호 검증 //
     @PostMapping("/user/verify/pass")
     public ResponseEntity<?> userCheck(@RequestBody UserDTO userDTO) {
@@ -108,7 +111,4 @@ import java.util.Map;
 
         return userService.updateUserInfo(userDTO);
     }
-
-
-
 }
