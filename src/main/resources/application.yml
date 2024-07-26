@@ -69,11 +69,12 @@ img:
         path: prodImg/
 
 jwt:
-    issuer: ty-662@teak-territory-418603.iam.gserviceaccount.com
-    secret: -----BEGIN PRIVATE KEY-----MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDfTMIc0SGUw4d3\n9kW+gCcstaP0o6ROYMFWWHmNGFN80M9uVeKWZm05viODq7tXYgUao359U5gO4TaM\nxunLcvg530LvboXaLHLu57pkouIPupoqrBQvULPaAVD9401cVOnHsF7fTMVpCJ2y\nHjBdi3kHNgOU2otzaZxlZwDYL19pNOa74Zo38Bot/OJM1YDVMo7ArGqn6GZ4ZkLy\nRI988hdCQyCQsjvcnxqxhjsBRlCWqWng6jN7RsS3bhP+8fkoRzxfJCU8Bhkk8Gpf\nmH7ocEnXFzLNMo+HAEW6ZsYrhr3NlAlAsEixD8FGD0992TpljErgZ474Y65MJUQd\naJy1lt/PAgMBAAECggEABuVv+UPcLaP8QxAwBzod+5uAfMWxBVqnnesNlfXyXiB0\nx4uPe+Wd6fKdViuvlXtJfREfju9N+uepr59VCRt73w2uG4bmS16kDgzKDOGa6bFx\noW+/D9cGNu1jevPSJ8/XiHtB8tOEJUJG3IFiLQFps3dPlQFK3T2dvuP3erW71Jvm\n2v0t//u6UOaQ7YHR/gzcocdjcAgQJezhb0vX3JzjDquJZlAMN3dCjNHxZgC5Rxvv\nzM0/HV8ll5ddtu7A3VdUcSlWvFpefWVutZqYtCO4k3IfledZ5LriDLwPYynBB1xL\n7NXru8PE7u5eQIRt+NnrekYJx7i9jDUciZFCGbcPAQKBgQD7VWgnD/EuGpiMnTFl\nFTa9TG/j16JsIlolCcCDaj+mnw3PsfSdRBWenEdGgIC5HwvUR2lypzH/W3+MeHpY\nHsAFVENS3NLN0zD4l/PeKoSTb1s83p4GXL0DTzlJakRIPf7czSOFdZDBb2/bY7eR\nlRVq2yz/2TyGlYBBHH7g4mO9UQKBgQDjchs408sGz3xjVj//by4SYoa+igMsK+zU\nhrW8FB7AH9g3Vvf8wphoV3XSG1FRq5KXh6m+eTvbx5LKheb1g/A5AQpSKGuZQxXx\n5thyWzX+Wj0YVOmOuFSdiMK4jYKwG46v2YOVfFFgopm9GMfLj7gZKnnLGsll0qPn\n2bq5bNsDHwKBgAmv6wnGZYdfYw3YaTT6MlftgEqJ3yrH0C2pSJBIIhfr/X5J36HI\nJAUvBNhEz7FS7wPJlNjkdNrgzfO+GQkYdlI+QzIIbN+eCj8qrC2d+eos2ploAzM/\nk9Fy1kRsIiGeshoUlg/oziGGiAsutr6XvnGV7RAXcWvGi2D3FjTYxPthAoGAPN2S\nT1jOIhpwTR0Nr0uPZrgbGu5P/wgaLp2GELjJqdxbviN15ZwlsPaGvx00W8iwSACz\n+hbzX9M+gxfmQJl4NakDnAzZDoCXZM7D6YZjIpf/dX1zqw/FBQtOIJkt+fbF7mUl\nA2HrXRLmVWZGQUFKoOFvCl02vBrsZeUsRObOjT0CgYAuSFnzr+hNAUhaVEKB2z/0\ndcjJhdIvZaeAvDt4hQAJpAVs7+4e0f7reWAsr3Ke6TKD8XlDjJK42r+1lsLFOkbP\ndWKU+vm9BSpE+s9HeRncVX91gCzBVpBRCk+1e2OXbvnI6hvaoBlUPm0cMXUbEr03\nRuqoxixwoxYXPSOuAgbbig==-----END PRIVATE KEY-----
+    issuer: hyeji111544@gmail.com
+    secret: 4XudNUpSmog3lwI9thJFejF7YfBBQnCI
 
 front:
-    url: 'http://localhost:3000' # 개발용
-    #url: 'http://3.34.158.6' # 배포용
+    #url: 'http://localhost:3000' # 개발용
+    url: 'http://3.34.158.6' # 배포용
+
 
 
