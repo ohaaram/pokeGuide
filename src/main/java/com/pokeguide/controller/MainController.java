@@ -21,5 +21,13 @@ public class MainController {
 
         return ResponseEntity.status(HttpStatus.OK).body("안녕");
     }
+
+
+    @GetMapping("/users")
+    public ResponseEntity<?> users(){
+
+        return ResponseEntity.status(HttpStatus.OK).body("안녕");
+    }
+
 }
 
