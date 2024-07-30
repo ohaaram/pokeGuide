@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatMessageDTO {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cmNo;
     private String message;
     private LocalDateTime cDate;
