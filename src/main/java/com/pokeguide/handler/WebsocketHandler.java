@@ -1,6 +1,7 @@
 package com.pokeguide.handler;
 
 
+import com.pokeguide.dto.ChatMessageDTO;
 import com.pokeguide.entity.ChatMessage;
 import com.pokeguide.repository.ChatMessageRepository;
 import com.pokeguide.service.ChatService;
@@ -12,6 +13,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 
@@ -39,8 +41,15 @@ public class WebsocketHandler extends TextWebSocketHandler {
                             chatMessage.getUid() + "*"+chatMessage.getCDate()
                             +"*"+chatMessage.getChatNo()+"*"+chatMessage.getMessage();
         }else{
-            chatService.saveChat(msg);
+            // 메시지를 DTO로 변환
+            ChatMessageDTO chatMessageDTO = new ChatMessageDTO();
+            chatMessageDTO.setMessage(parts[0]);
+            chatMessageDTO.setChatNo(Integer.parseInt(parts[1]));
+            chatMessageDTO.setUid(parts[2]);
+            chatMessageDTO.setCDate(LocalDateTime.now());
 
+            // 메시지 저장
+            chatService.saveChat(chatMessageDTO);
         }
 
         for(String key : sessionMap.keySet()) {

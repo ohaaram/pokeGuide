@@ -25,6 +25,8 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public final StringPath title = createString("title");
 
+    public final StringPath uid = createString("uid");
+
     public QChatRoom(String variable) {
         super(ChatRoom.class, forVariable(variable));
     }
