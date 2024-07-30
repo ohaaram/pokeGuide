@@ -73,8 +73,8 @@ jwt:
     secret: 4XudNUpSmog3lwI9thJFejF7YfBBQnCI
 
 front:
-    #url: 'http://localhost:3000' # 개발용
-    url: 'http://3.34.158.6' # 배포용
+    url: 'http://localhost:3000' # 개발용
+    #url: 'http://3.34.158.6' # 배포용
 
 
 

@@ -31,4 +31,6 @@ public class User {
     @CreationTimestamp
     private String createDate;
 
+    private int visitCount;
+
 }
