@@ -19,5 +19,6 @@ public class ChatRoom {
     private int chatNo;
     private String title;
     private String status;
+    private String uid;
 
 }
