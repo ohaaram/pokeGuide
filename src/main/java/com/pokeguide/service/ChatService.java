@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -38,5 +39,16 @@ public class ChatService {
 
             // 엔티티 저장
             return chatMessageRepository.save(chatMessage);
+    }
+
+    public void addUserToChatRoom(int chatNo, String uid) {
+        ChatUser chatUser = new ChatUser();
+        chatUser.setChatNo(chatNo);
+        chatUser.setUid(uid);
+        chatUserRepository.save(chatUser);
+    }
+
+    public List<ChatMessage> getMessagesByChatNo(int chatNo) {
+        return chatMessageRepository.findByChatNo(chatNo);
     }
 }
