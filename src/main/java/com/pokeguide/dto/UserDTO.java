@@ -25,6 +25,7 @@ public class UserDTO {
     private String refreshToken;
     private String createDate;
     private int visitCount;
+    private String status;
 
 
 

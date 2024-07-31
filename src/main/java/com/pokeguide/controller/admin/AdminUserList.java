@@ -43,6 +43,32 @@ public class AdminUserList {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    //하나의 유저 삭제
+    @GetMapping("/admin/delUser")
+    public ResponseEntity<?> delUser(@RequestParam("uid")String uid){
+
+        log.info("하나의 유저 삭제 - uid : "+uid);
+
+        int result = adminService.delUser(uid);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+    }
+
+    //유저 상태 정지로 변경
+    @GetMapping("/admin/userStop")
+    public ResponseEntity<?> userStop(@RequestParam("uid")String uid){
+
+        log.info("하나의 유저 삭제 - uid : "+uid);
+
+        int result = adminService.userStop(uid);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+    }
+
+
+
 
     //유저 권한 변경
     @PostMapping("/admin/changeRole")

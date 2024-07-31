@@ -39,6 +39,31 @@ public class AdminService {
         return 1;
     }
 
+    //하나의 유저만 삭제(성공시 1을 반환)
+    public int delUser(String uid){//이거 수정해야함. 유저 삭제시, 관련 글 삭제도 해야함
+
+        userRepository.deleteById(uid);
+
+        return 1;
+
+    }
+
+
+    //유저 상태 정지로 변경(성공시 1을 반환)
+    public int userStop(String uid){//이거 수정해야함. 유저 삭제시, 관련 글 삭제도 해야함
+
+        Optional<User> optUser = userRepository.findById(uid);
+
+        User user = modelMapper.map(optUser, User.class);
+
+        user.setStatus("inactive");//유저상태 변경
+
+        userRepository.save(user);
+
+        return 1;
+
+    }
+
     //유저 권한 변경
     public void changeRole(UserDTO userDTO){
 
@@ -52,4 +77,5 @@ public class AdminService {
 
         userRepository.save(chageUser);
     }
+    
 }
