@@ -7,9 +7,13 @@ import com.pokeguide.repository.Custom.UserRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -48,5 +52,58 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             log.error("Error msg :" + e.getMessage());
             return -1;
         }
+    }
+
+    @Override
+    public List<User> searchKeyword(String cate, String keyword) {
+
+        List<User> result = null;
+
+        if(cate.equals("name")) {
+
+            result= jpaQueryFactory
+                    .select(qUser)
+                    .from(qUser)
+                    .where(qUser.name.like(keyword))
+                    .fetch();
+
+        }else if(cate.equals("nick")){
+
+            result= jpaQueryFactory
+                    .select(qUser)
+                    .from(qUser)
+                    .where(qUser.nick.like(keyword))
+                    .fetch();
+
+        }else if(cate.equals("uid")){
+
+            result= jpaQueryFactory
+                    .select(qUser)
+                    .from(qUser)
+                    .where(qUser.uid.like(keyword))
+                    .fetch();
+
+        }
+
+        return  result;
+    }
+
+    @Override
+    public Page<User> allUserList(Pageable pageable) {
+
+        List<User> result= jpaQueryFactory
+                .select(qUser)
+                .from(qUser)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        log.info("유저 리스트 - 임플 결과 : "+result.toString());
+
+        long total = result.size();
+
+        log.info("유저 리스트 사이즈 : "+total);
+
+        return new PageImpl<> (result, pageable, total);
     }
 }

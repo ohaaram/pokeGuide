@@ -1,12 +1,18 @@
 package com.pokeguide.service;
 
 
+import com.pokeguide.dto.PageRequestDTO;
+import com.pokeguide.dto.PageResponseDTO;
 import com.pokeguide.dto.UserDTO;
 import com.pokeguide.entity.User;
 import com.pokeguide.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +28,41 @@ public class AdminService {
 
 
     //유저 리스트 가져오기(관리자 - 회원목록)
-    public List<User> userList(){
+    public ResponseEntity<?> userList(PageRequestDTO pageRequestDTO){
 
-       List<User> userList =  userRepository.findAll();
+        Pageable pageable = pageRequestDTO.getPageable("no");
 
-       return userList;
+       Page<User> userList =  userRepository.allUserList(pageable);
 
+       log.info("userList - adminServcie : "+userList);
+
+       if(!userList.getContent().isEmpty()) {
+           List<UserDTO> dtoList = userList.getContent().stream().map(entity -> {
+               UserDTO dto = modelMapper.map(entity, UserDTO.class);
+               return dto;
+           }).toList();
+
+
+           int total = (int) userList.getTotalElements();
+
+           PageResponseDTO<UserDTO> responseDTO = PageResponseDTO.<UserDTO>builder()
+                   .pageRequestDTO(pageRequestDTO)
+                   .dtoList(dtoList)
+                   .total(total)
+                   .build();
+           return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+       }else{
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
+       }
+    }
+
+    
+    //엑셀용 모든 유저리스트 출력
+    public List<User> allUserList(){
+
+        List<User> userList = userRepository.findAll();
+        
+        return userList;
     }
 
     
@@ -76,6 +111,16 @@ public class AdminService {
         chageUser.setRole(userDTO.getRole());
 
         userRepository.save(chageUser);
+    }
+
+    
+    //검색
+    public List<User> search(String cate, String keyword){
+
+        List<User> users = userRepository.searchKeyword(cate,keyword);
+
+        return users;
+        
     }
     
 }
