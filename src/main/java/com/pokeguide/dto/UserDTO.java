@@ -24,6 +24,9 @@ public class UserDTO {
     private String profile;
     private String refreshToken;
     private String createDate;
+    private int visitCount;
+    private String status;
+
 
 
     // 파일 업로드 추가 //

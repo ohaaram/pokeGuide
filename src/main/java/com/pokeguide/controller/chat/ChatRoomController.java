@@ -4,6 +4,7 @@ import com.pokeguide.entity.ChatMessage;
 import com.pokeguide.entity.ChatRoom;
 import com.pokeguide.repository.ChatMessageRepository;
 import com.pokeguide.repository.ChatRoomRepository;
+import com.pokeguide.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomService chatRoomService;
 
     @GetMapping("/chatrooms")
     public List<ChatRoom> getChatRooms() {
@@ -22,7 +24,7 @@ public class ChatRoomController {
 
     @PostMapping("/chatrooms")
     public ChatRoom createChatRoom(@RequestBody ChatRoom chatRoom) {
-        return chatRoomRepository.save(chatRoom);
+        return chatRoomService.createChatRoom(chatRoom.getTitle(), chatRoom.getUid());
     }
 
     @GetMapping("/messages/chatroom/{chatNo}")
@@ -30,8 +32,5 @@ public class ChatRoomController {
         return chatMessageRepository.findByChatNo(chatNo);
     }
 
-    @PostMapping("/messages")
-    public ChatMessage saveMessage(@RequestBody ChatMessage chatMessage) {
-        return chatMessageRepository.save(chatMessage);
-    }
+
 }

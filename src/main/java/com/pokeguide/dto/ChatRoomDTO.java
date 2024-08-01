@@ -15,5 +15,6 @@ public class ChatRoomDTO {
     private int chatNo;
     private String title;
     private String status;
+    private String uid;
 
 }

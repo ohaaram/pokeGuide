@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatMessageDTO {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cmNo;
     private String message;
     private LocalDateTime cDate;
@@ -21,4 +22,5 @@ public class ChatMessageDTO {
     private String uid;
     private String oName;
     private String sName;
+    private String imageUrl;
 }
