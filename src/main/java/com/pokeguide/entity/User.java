@@ -27,10 +27,9 @@ public class User {
     private String email;
     private String address;
     private String profile;
-
     @CreationTimestamp
     private String createDate;
-
     private int visitCount;
+    private String status;
 
 }
