@@ -76,5 +76,9 @@
         url: 'http://localhost:3000' # 개발용
         #url: 'http://3.34.158.6' # 배포용
 
+    front1:
+      url: 'localhost' # 개발용
+      #url: '3.34.158.6' # 배포용
+
 
 
