@@ -22,4 +22,5 @@ public class ChatMessageDTO {
     private String uid;
     private String oName;
     private String sName;
+    private String imageUrl;
 }
