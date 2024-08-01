@@ -25,6 +25,8 @@ public class QChatMessage extends EntityPathBase<ChatMessage> {
 
     public final NumberPath<Integer> cmNo = createNumber("cmNo", Integer.class);
 
+    public final StringPath imageUrl = createString("imageUrl");
+
     public final StringPath message = createString("message");
 
     public final StringPath oName = createString("oName");

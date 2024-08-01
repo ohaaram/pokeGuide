@@ -159,5 +159,8 @@ public class UserService {
         return "myImg" + sName;
     }
 
+    public Optional<User> findByUid(String uid) {
+        return userRepository.findById(uid);
+    }
 
 }

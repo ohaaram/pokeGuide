@@ -25,4 +25,5 @@ public class ChatMessage {
     private String uid;
     private String oName;
     private String sName;
+    private String imageUrl;
 }
