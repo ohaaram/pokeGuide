@@ -1,9 +1,11 @@
 package com.pokeguide.repository.Impl;
 
 
+import com.pokeguide.dto.PageRequestDTO;
 import com.pokeguide.entity.QUser;
 import com.pokeguide.entity.User;
 import com.pokeguide.repository.Custom.UserRepositoryCustom;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -94,6 +96,56 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         List<User> result= jpaQueryFactory
                 .select(qUser)
                 .from(qUser)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        log.info("유저 리스트 - 임플 결과 : "+result.toString());
+
+        long total = result.size();
+
+        log.info("유저 리스트 사이즈 : "+total);
+
+        return new PageImpl<> (result, pageable, total);
+    }
+
+    @Override
+    public Page<User> searchList(Pageable pageable, PageRequestDTO pageRequestDTO) {
+
+        log.info("검색이기때문에 여기로 들어와야해!");
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        String keyword = pageRequestDTO.getKeyword();
+
+        log.info("임플에서 확인하는 카테고리 : "+pageRequestDTO.getSearchCate());
+
+        log.info("임플에서 확인하는 pageDTO의 keyword : "+pageRequestDTO.getKeyword());
+
+
+        if(pageRequestDTO.getSearchCate().equals("name")){
+
+            log.info("이름인가?");
+
+            builder.and(qUser.name.likeIgnoreCase("%" + keyword + "%"));
+
+        }else if(pageRequestDTO.getSearchCate().equals("uid")){
+
+            log.info("아이디인가?");
+
+            builder.and(qUser.uid.likeIgnoreCase("%" + keyword + "%"));
+
+        }else if(pageRequestDTO.getSearchCate().equals("nick")){
+
+            log.info("닉네임인가?");
+            builder.and(qUser.nick.likeIgnoreCase("%" + keyword + "%"));
+
+        }
+
+        List<User> result= jpaQueryFactory
+                .select(qUser)
+                .from(qUser)
+                .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
