@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -69,18 +70,20 @@ public class ChatContoller {
         try {
             // 저장할 경로 설정
             String fileName = file.getOriginalFilename();
-            Path uploadPath = Paths.get("uploads");
+            Path uploadPath = Paths.get("uploads/");
+
 
             if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
+                Files.createDirectories(uploadPath);  // 경로가 없으면 생성
             }
 
             // 파일 저장
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
+
             // 파일의 URL 생성
-            String fileUrl = "/uploads/" + fileName;
+            String fileUrl = "/uploads/" + URLEncoder.encode(fileName, "UTF-8").replace("+", "%20");
             return ResponseEntity.ok(Collections.singletonMap("imageUrl", fileUrl));
         } catch (IOException e) {
             e.printStackTrace();
