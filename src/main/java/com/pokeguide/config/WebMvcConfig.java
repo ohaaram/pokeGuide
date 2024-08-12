@@ -15,11 +15,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${front.url}")
     private String frontUrl;
 
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 이미지 경로
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:uploads/");
+                .addResourceLocations("file:/C:/Users/Qksrm/OneDrive/바탕 화면/pokeGuide/uploads/");
+
 
         // 이미지 경로
         registry.addResourceHandler("/prodImg/**")
