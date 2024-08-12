@@ -32,7 +32,21 @@ public class AdminService {
 
         Pageable pageable = pageRequestDTO.getPageable("no");
 
-       Page<User> userList =  userRepository.allUserList(pageable);
+        log.info("어떤게 찍히나? : "+pageable);
+
+        Page<User> userList;
+
+        log.info("키워드 값이 찍히니 ? : "+pageRequestDTO.getKeyword());//확인해볼 차례
+
+        if(pageRequestDTO.getKeyword()==null || pageRequestDTO.getKeyword().isEmpty()) {
+
+           userList = userRepository.allUserList(pageable);
+
+        }else{
+
+            log.info("키워드 값이 있어서 여기로 들어와야해 : ");
+           userList = userRepository.searchList(pageable,pageRequestDTO);
+        }
 
        log.info("userList - adminServcie : "+userList);
 
@@ -41,7 +55,6 @@ public class AdminService {
                UserDTO dto = modelMapper.map(entity, UserDTO.class);
                return dto;
            }).toList();
-
 
            int total = (int) userList.getTotalElements();
 
@@ -77,7 +90,7 @@ public class AdminService {
     //하나의 유저만 삭제(성공시 1을 반환)
     public int delUser(String uid){//이거 수정해야함. 유저 삭제시, 관련 글 삭제도 해야함
 
-        userRepository.deleteById(uid);
+        //userRepository.deleteById(uid);
 
         return 1;
 
@@ -92,6 +105,23 @@ public class AdminService {
         User user = modelMapper.map(optUser, User.class);
 
         user.setStatus("inactive");//유저상태 변경
+
+        userRepository.save(user);
+
+        return 1;
+
+    }
+
+
+
+    //유저 상태 활성화로 변경(성공시 1을 반환)
+    public int userActive(String uid){//이거 수정해야함. 유저 삭제시, 관련 글 삭제도 해야함
+
+        Optional<User> optUser = userRepository.findById(uid);
+
+        User user = modelMapper.map(optUser, User.class);
+
+        user.setStatus("active");//유저상태 변경
 
         userRepository.save(user);
 

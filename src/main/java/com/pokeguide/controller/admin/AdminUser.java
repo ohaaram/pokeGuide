@@ -88,6 +88,18 @@ public class AdminUser {
     }
 
 
+
+    //유저 상태 활성화로 변경
+    @GetMapping("/admin/userActive")
+    public ResponseEntity<?> userActive(@RequestParam("uid")String uid){
+
+        log.info("하나의 유저 삭제 - uid : "+uid);
+
+        int result = adminService.userActive(uid);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
     //검색
     @PostMapping("/admin/searchKeyword")
     public ResponseEntity<?> searchKeyword(@RequestBody Map<String,String> search){

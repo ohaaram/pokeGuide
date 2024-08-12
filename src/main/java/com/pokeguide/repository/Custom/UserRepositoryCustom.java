@@ -1,6 +1,7 @@
 package com.pokeguide.repository.Custom;
 
 
+import com.pokeguide.dto.PageRequestDTO;
 import com.pokeguide.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,6 @@ public interface UserRepositoryCustom {
     public List<User> searchKeyword(String cate,String keyword);
 
     public Page<User> allUserList(Pageable pageable);
+
+    public Page<User> searchList(Pageable pageable, PageRequestDTO pageRequestDTO);
 }
