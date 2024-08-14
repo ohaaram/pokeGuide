@@ -18,18 +18,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 이미지 경로
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:/C:/Users/Qksrm/OneDrive/바탕 화면/pokeGuide/uploads/");
+        registry.addResourceHandler("/pokeguide/uploads/**")
+                .addResourceLocations("file:" + System.getProperty("user.dir") + "/uploads/");
+        System.out.println("Current working directory!!: " + System.getProperty("user.dir"));
 
 
         // 이미지 경로
-        registry.addResourceHandler("/prodImg/**")
-                .addResourceLocations("file:prodImg/");
+        //  registry.addResourceHandler("/prodImg/**")
+        //        .addResourceLocations("file:prodImg/");
 
         // 추가할 새로운 리소스 핸들러
-        registry.addResourceHandler("/newStaticResources/**")
-                .addResourceLocations("file:newStaticResources/");
+        //  registry.addResourceHandler("/newStaticResources/**")
+        //       .addResourceLocations("file:newStaticResources/");
     }
 
     // CORS 방지를 위한 설정

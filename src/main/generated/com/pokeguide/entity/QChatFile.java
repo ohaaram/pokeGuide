@@ -19,9 +19,9 @@ public class QChatFile extends EntityPathBase<ChatFile> {
 
     public static final QChatFile chatFile = new QChatFile("chatFile");
 
-    public final StringPath filename = createString("filename");
+    public final DateTimePath<java.time.LocalDateTime> cDate = createDateTime("cDate", java.time.LocalDateTime.class);
 
-    public final DateTimePath<java.time.LocalDateTime> newDate = createDateTime("newDate", java.time.LocalDateTime.class);
+    public final StringPath filename = createString("filename");
 
     public final StringPath uid = createString("uid");
 
