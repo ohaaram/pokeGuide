@@ -22,7 +22,7 @@ public class ChatFile {
     private String uid;
     private String filename;
 
-    private LocalDateTime newDate;
+    private LocalDateTime cDate;
 
 
 }
