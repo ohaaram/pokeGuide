@@ -7,6 +7,8 @@ import com.pokeguide.repository.ChatUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService   {
@@ -29,5 +31,11 @@ public class ChatRoomService   {
         chatUserRepository.save(chatUser);
 
         return savedRoom;
+    }
+
+    public boolean isUserAuthorized(int chatNo, String uid) {
+        // ChatUser 테이블에서 사용자가 해당 채팅방에 속해 있는지 확인
+        Optional<ChatUser> chatUser = chatUserRepository.findByChatNoAndUid(chatNo, uid);
+        return chatUser.isPresent();
     }
 }

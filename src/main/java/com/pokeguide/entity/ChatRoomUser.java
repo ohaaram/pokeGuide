@@ -1,10 +1,8 @@
 package com.pokeguide.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,17 +11,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "chatFile")
-public class ChatFile {
+@Table(name = "ChatRoomUser")
+public class ChatRoomUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int chatNo;
     private String uid;
-    private String filename;
-
-    @CreationTimestamp
-    private LocalDateTime cDate;
-
 
 }
