@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "chatRoom")
+@Table(name = "ChatRoom")
 public class ChatRoom {
 
     @Id

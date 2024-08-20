@@ -3,5 +3,8 @@ package com.pokeguide.repository;
 import com.pokeguide.entity.ChatUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ChatUserRepository extends JpaRepository<ChatUser, String> {
+import java.util.Optional;
+
+public interface ChatUserRepository extends JpaRepository<ChatUser, Long> {
+    Optional<ChatUser> findByChatNoAndUid(int chatNo, String uid);
 }

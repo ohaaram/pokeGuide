@@ -23,6 +23,8 @@ public class QChatFile extends EntityPathBase<ChatFile> {
 
     public final StringPath filename = createString("filename");
 
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
     public final StringPath uid = createString("uid");
 
     public QChatFile(String variable) {

@@ -82,8 +82,6 @@ public class ChatContoller {
             String uploadDir = System.getProperty("user.dir") + "/uploads/";
             Path uploadPath = Paths.get(uploadDir);
 
-            // 경로 로그 출력
-            System.out.println("File will be uploaded to!!!! : " + uploadPath.toAbsolutePath());
 
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);  // 경로가 없으면 생성
@@ -93,16 +91,28 @@ public class ChatContoller {
             Path filePath = uploadPath.resolve(uniqueFilename);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
+            // 파일 URL 생성
+            String fileUrl = "/pokeguide/uploads/" + URLEncoder.encode(uniqueFilename, "UTF-8").replace("+", "%20");
+
             // 파일 정보를 DB에 저장
             ChatFile chatFile = ChatFile.builder()
                     .uid(uid)
                     .filename(uniqueFilename)
-                    .cDate(LocalDateTime.now())
                     .build();
             chatFileRepository.save(chatFile);
 
-            // 파일 URL 생성
-            String fileUrl = "/pokeguide/uploads/" + URLEncoder.encode(uniqueFilename, "UTF-8").replace("+", "%20");
+            // 메시지 DB에 저장
+            ChatMessageDTO chatMessage = ChatMessageDTO.builder()
+                    .uid(uid)
+                    .chatNo(chatNo)
+                    .imageUrl(fileUrl)  // 이미지 URL 저장
+                    .sName(uniqueFilename)  // filename을 sName으로 저장
+                    .message("")  // 메시지 필드는 빈 문자열로 설정
+                    .cDate(LocalDateTime.now())
+                    .build();
+            chatService.saveChat(chatMessage);
+
+
             return ResponseEntity.ok(Collections.singletonMap("imageUrl", fileUrl));
         } catch (IOException e) {
             e.printStackTrace();
