@@ -21,8 +21,8 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/chatrooms")
-    public List<ChatRoom> getChatRooms() {
-        return chatRoomRepository.findAll();
+    public List<ChatRoom> getChatRooms(@RequestParam String uid) {
+        return chatRoomService.findChatRoomsByUid(uid);
     }
 
     @PostMapping("/chatrooms")
@@ -37,9 +37,6 @@ public class ChatRoomController {
         }
 
         List<ChatMessage> messages = chatMessageRepository.findByChatNo(chatNo);
-        if (messages == null) {
-            messages = new ArrayList<>();  // 메시지가 없을 경우 빈 배열로 초기화
-        }
         return ResponseEntity.ok(messages);
     }
 
