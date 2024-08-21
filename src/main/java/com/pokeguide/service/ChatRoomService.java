@@ -7,6 +7,7 @@ import com.pokeguide.repository.ChatUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,6 @@ public class ChatRoomService   {
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setTitle(title);
         chatRoom.setUid(uid); // 사용자 ID 설정
-        chatRoom.setStatus("active"); // 예시 상태 설정
 
         ChatRoom savedRoom = chatRoomRepository.save(chatRoom);
 
@@ -31,6 +31,19 @@ public class ChatRoomService   {
         chatUserRepository.save(chatUser);
 
         return savedRoom;
+    }
+
+    // 사용자를 채팅방에 초대할 때도 ChatUser에 저장
+    public void addUserToChatRoom(int chatNo, String uid) {
+        ChatUser chatUser = new ChatUser();
+        chatUser.setChatNo(chatNo);
+        chatUser.setUid(uid);
+        chatUserRepository.save(chatUser);
+    }
+
+    // 특정 사용자가 속한 채팅방 목록 가져오기
+    public List<ChatRoom> findChatRoomsByUid(String uid) {
+        return chatRoomRepository.findChatRoomsByUid(uid);
     }
 
     public boolean isUserAuthorized(int chatNo, String uid) {
