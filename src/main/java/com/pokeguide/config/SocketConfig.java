@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SocketConfig {
+
     @Value("${front1.url}")
     private String frontUrl1;
+
     @Bean
     public SocketIOServer socketIOServer() {
         com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
