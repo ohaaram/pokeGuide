@@ -24,4 +24,7 @@ public class SocketIOService {
             e.printStackTrace();
         }
     }
+    public void sendNotification(String uid, String message) {
+        server.getRoomOperations(uid).sendEvent("notification", message);
+    }
 }
