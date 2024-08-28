@@ -3,6 +3,7 @@ package com.pokeguide.controller.chat;
 import com.pokeguide.dto.ChatMessageDTO;
 import com.pokeguide.entity.ChatFile;
 import com.pokeguide.entity.ChatMessage;
+import com.pokeguide.entity.ChatUser;
 import com.pokeguide.entity.User;
 import com.pokeguide.repository.ChatFileRepository;
 import com.pokeguide.service.ChatService;
@@ -40,10 +41,21 @@ public class ChatContoller {
 
     @PostMapping("/messages")
     public ChatMessage sendMessage(@RequestBody ChatMessageDTO messageDTO) {
+        // 1. 메시지를 저장
         ChatMessage savedMessage = chatService.saveChat(messageDTO);
 
-        // 클라이언트에 메시지 전송
-        socketIOService.sendMessage("chat message", savedMessage);
+        // 2. 해당 채팅방의 모든 사용자에게 실시간 메시지 전송
+        socketIOService.sendMessageToRoom(String.valueOf(savedMessage.getChatNo()), "chat message", savedMessage);
+
+        // 3. 해당 채팅방에 속한 사용자들 가져오기
+        List<ChatUser> usersInChat = chatService.getUsersInChatRoom(savedMessage.getChatNo());
+
+        // 4. 알림 전송 (자신을 제외한 다른 사용자들에게만)
+        for (ChatUser user : usersInChat) {
+            if (!user.getUid().equals(savedMessage.getUid())) {
+                socketIOService.sendNotification(user.getUid(), "New message in chat " + savedMessage.getChatNo());
+            }
+        }
 
         return savedMessage;
     }

@@ -16,14 +16,15 @@ public class SocketIOService {
         this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    public void sendMessage(String event, Object data) {
+    public void sendMessageToRoom(String chatNo, String event, Object data) {
         try {
             String jsonString = objectMapper.writeValueAsString(data);
-            server.getBroadcastOperations().sendEvent(event, jsonString);
+            server.getRoomOperations(chatNo).sendEvent(event, jsonString);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void sendNotification(String uid, String message) {
         server.getRoomOperations(uid).sendEvent("notification", message);
     }

@@ -40,8 +40,13 @@ public class ChatService {
             throw new IllegalArgumentException("Message and Image cannot both be null or empty");
         }
 
-            // 엔티티 저장
-            return chatMessageRepository.save(chatMessage);
+        // 엔티티 저장
+        chatMessageRepository.save(chatMessage);
+
+        // 알림과 메시지 전송 처리
+        createMessageAndSendNotification(messageDTO.getUid(), messageDTO.getMessage(), messageDTO.getChatNo());
+
+        return chatMessage;
     }
 
     public void addUserToChatRoom(int chatNo, String uid) {
@@ -51,25 +56,26 @@ public class ChatService {
         chatUserRepository.save(chatUser);
     }
 
-    public List<ChatMessage> getMessagesByChatNo(int chatNo) {
-        return chatMessageRepository.findByChatNo(chatNo);
+    public List<ChatUser> getUsersInChatRoom(int chatNo) {
+        return chatUserRepository.findByChatNo(chatNo);
     }
+
 
     @Transactional
     public void createMessageAndSendNotification(String uid, String message, Integer chatNo) {
-        // 1. 메시지 생성 및 데이터베이스에 저장
-        ChatMessage chatMessage = ChatMessage.builder()
-                .uid(uid)
-                .message(message)
-                .chatNo(chatNo)
-                .build();
-
-        chatMessageRepository.save(chatMessage);
-
-        // 2. 알림 생성 및 데이터베이스에 저장
+        // 1. 알림 생성 및 데이터베이스에 저장
         alarmService.createAlarm(uid, "New message in chat " + chatNo, chatNo);
 
-        // 3. Socket.IO를 통해 실시간으로 알림 전송
-        socketIOService.sendNotification(uid, "New message in chat " + chatNo);
+        // 2. 해당 방의 모든 사용자에게 알림 전송
+        List<ChatUser> usersInChat = chatUserRepository.findByChatNo(chatNo);
+        for (ChatUser user : usersInChat) {
+            if (!user.getUid().equals(uid)) {
+                socketIOService.sendNotification(user.getUid(), "New message in chat " + chatNo);
+            }
+        }
+
+        // 3. 해당 방의 사용자들에게 실제 채팅 메시지 전송
+        socketIOService.sendMessageToRoom(String.valueOf(chatNo), "chat message", message);
     }
+
 }
