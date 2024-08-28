@@ -132,12 +132,14 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         }else if(pageRequestDTO.getSearchCate().equals("uid")){
 
             log.info("아이디인가?");
+            log.info("currentPage : "+pageRequestDTO.getPg());
 
             builder.and(qUser.uid.likeIgnoreCase("%" + keyword + "%"));
 
         }else if(pageRequestDTO.getSearchCate().equals("nick")){
 
             log.info("닉네임인가?");
+
             builder.and(qUser.nick.likeIgnoreCase("%" + keyword + "%"));
 
         }
