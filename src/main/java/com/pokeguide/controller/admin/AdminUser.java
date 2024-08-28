@@ -40,14 +40,13 @@ public class AdminUser {
     }
 
 
-
     //엑셀다운용 모든 유저 리스트 출력
     @PostMapping("/admin/allUserList")
     public ResponseEntity<?> allUserList(){
 
         log.info("엑셀출력용 유저 리스트 출력쪽에 들어왔다!");
 
-        List<User> userList= adminService.allUserList();//페이지 네이션 완성하기
+        List<User> userList= adminService.allUserList();
 
         return ResponseEntity.status(HttpStatus.OK).body(userList);
 
@@ -115,9 +114,7 @@ public class AdminUser {
         return ResponseEntity.status(HttpStatus.OK).body(users);
 
     }
-
-
-
+    
 
     //유저 권한 변경
     @PostMapping("/admin/changeRole")
