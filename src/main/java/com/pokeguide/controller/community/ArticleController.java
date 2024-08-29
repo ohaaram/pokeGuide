@@ -7,6 +7,7 @@ import com.pokeguide.entity.Article;
 import com.pokeguide.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +24,14 @@ public class ArticleController {
     private final ArticleService articleService;
 
     //글 리스트 출력
-    @GetMapping("/community")
-    public void allList(@RequestBody PageRequestDTO pageRequestDTO){
+    @PostMapping("/community/list")
+    public ResponseEntity<?> allList(@RequestBody PageRequestDTO pageRequestDTO){
 
-        articleService.allList(pageRequestDTO);
+        ResponseEntity<?> result = articleService.allList(pageRequestDTO);
 
+        log.info("community-list까지는 들어오는가?");
 
+        return ResponseEntity.status(HttpStatus.OK).body(result);
 
     }
 
@@ -42,8 +45,5 @@ public class ArticleController {
 
         return articleService.register(articleDTO);
     }
-
-
-
 
 }
