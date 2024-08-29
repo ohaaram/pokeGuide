@@ -19,4 +19,5 @@ public class ArticleDTO {
     private LocalDateTime rdate;
     private int hit;
     private String uid;
+    private String nick;
 }

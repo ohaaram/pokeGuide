@@ -9,6 +9,7 @@ import com.pokeguide.entity.Article;
 import com.pokeguide.entity.User;
 import com.pokeguide.repository.ArticleRepository;
 import com.pokeguide.repository.UserRepository;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -38,7 +39,22 @@ public class ArticleService {
 
         if(pageRequestDTO.getKeyword()==null || pageRequestDTO.getKeyword().isEmpty()) {
 
-            //articleList = articleRepository.allUserList(pageable);
+            log.info("키워드가 없으니, 여기에 들어와야지!");
+
+            List<Tuple> TupleList = articleRepository.allArticleList(pageable);
+
+            List<ArticleDTO> dtoList = TupleList.stream()
+                    .map(entity -> {
+                        Article article = entity.get(0,Article.class);
+                        ArticleDTO dto = modelMapper.map(article, ArticleDTO.class);
+                        dto.setNick(entity.get(1,String.class));//닉네임 가져오기
+                        return dto;
+                    })
+                    .toList();
+
+            log.info("뭐 찍히는지 보자"+dtoList);
+
+            return  ResponseEntity.status(HttpStatus.OK).body(dtoList);
 
         }else{
 
@@ -46,17 +62,18 @@ public class ArticleService {
             //articleList = articleRepository.searchList(pageable,pageRequestDTO);
         }
 
-        //log.info("articleList - adminServcie : "+articleList);
+        log.info("articleList - adminServcie : "+articleList);
 
         if(!articleList.getContent().isEmpty()) {
-            List<UserDTO> dtoList = articleList.getContent().stream().map(entity -> {
-                UserDTO dto = modelMapper.map(entity, UserDTO.class);
+            List<ArticleDTO> dtoList = articleList.getContent().stream().map(entity -> {
+                ArticleDTO dto = modelMapper.map(entity, ArticleDTO.class);
+
                 return dto;
             }).toList();
 
             int total = (int) articleList.getTotalElements();
 
-            PageResponseDTO<UserDTO> responseDTO = PageResponseDTO.<UserDTO>builder()
+            PageResponseDTO<ArticleDTO> responseDTO = PageResponseDTO.<ArticleDTO>builder()
                     .pageRequestDTO(pageRequestDTO)
                     .dtoList(dtoList)
                     .total(total)
