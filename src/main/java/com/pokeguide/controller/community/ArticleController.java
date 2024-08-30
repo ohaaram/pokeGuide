@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +41,14 @@ public class ArticleController {
         log.info("여기는 controller의 내용을 찍어보는 곳 : "+ articleDTO.getContents());
 
         return articleService.register(articleDTO);
+    }
+
+    @GetMapping("/community/view")
+    public ResponseEntity<?> viewer(@RequestParam("ano")String ano){
+
+        log.info("ano가 잘 들어오나 ? : "+ano);
+
+        return articleService.viewer(ano);
     }
 
 }

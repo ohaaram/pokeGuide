@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class ArticleService {
     public ResponseEntity<?> allList(PageRequestDTO pageRequestDTO){
 
         Pageable pageable = pageRequestDTO.getPageable("no");
-        Page<Article> articleList=null;//여기에 null제거해주기!
+        Page<ArticleDTO> articleList=null;//여기에 null제거해주기!
 
         log.info("키워드 값이 찍히니 ? : "+pageRequestDTO.getKeyword());//확인해볼 차례
 
@@ -41,41 +42,26 @@ public class ArticleService {
 
             log.info("키워드가 없으니, 여기에 들어와야지!");
 
-            List<Tuple> TupleList = articleRepository.allArticleList(pageable);
+            articleList = articleRepository.allArticleList(pageable);
 
-            List<ArticleDTO> dtoList = TupleList.stream()
-                    .map(entity -> {
-                        Article article = entity.get(0,Article.class);
-                        ArticleDTO dto = modelMapper.map(article, ArticleDTO.class);
-                        dto.setNick(entity.get(1,String.class));//닉네임 가져오기
-                        return dto;
-                    })
-                    .toList();
 
-            log.info("뭐 찍히는지 보자"+dtoList);
-
-            return  ResponseEntity.status(HttpStatus.OK).body(dtoList);
+            log.info("뭐 찍히는지 보자"+articleList);
 
         }else{
 
             log.info("키워드 값이 있어서 여기로 들어와야해 : ");
-            //articleList = articleRepository.searchList(pageable,pageRequestDTO);
+            articleList = articleRepository.searchList(pageable,pageRequestDTO);
         }
 
         log.info("articleList - adminServcie : "+articleList);
 
         if(!articleList.getContent().isEmpty()) {
-            List<ArticleDTO> dtoList = articleList.getContent().stream().map(entity -> {
-                ArticleDTO dto = modelMapper.map(entity, ArticleDTO.class);
-
-                return dto;
-            }).toList();
 
             int total = (int) articleList.getTotalElements();
 
             PageResponseDTO<ArticleDTO> responseDTO = PageResponseDTO.<ArticleDTO>builder()
                     .pageRequestDTO(pageRequestDTO)
-                    .dtoList(dtoList)
+                    .dtoList(articleList.getContent())
                     .total(total)
                     .build();
             return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
@@ -99,5 +85,17 @@ public class ArticleService {
         }else{
             return ResponseEntity.status(HttpStatus.OK).body(0);
         }
+    }
+
+    public ResponseEntity<?> viewer(String ano){
+
+        int num = Integer.parseInt(ano);
+
+        Optional<Article> optArticle = articleRepository.findById(num);
+
+        Article article = modelMapper.map(optArticle,Article.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(article.getContents());
+
     }
 }
