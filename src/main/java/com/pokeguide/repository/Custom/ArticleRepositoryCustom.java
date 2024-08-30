@@ -1,5 +1,6 @@
 package com.pokeguide.repository.Custom;
 
+import com.pokeguide.dto.ArticleDTO;
 import com.pokeguide.dto.PageRequestDTO;
 import com.pokeguide.entity.Article;
 import com.querydsl.core.Tuple;
@@ -10,6 +11,8 @@ import java.util.List;
 
 public interface ArticleRepositoryCustom {
 
-    public List<Tuple> allArticleList(Pageable pageable);
+    public Page<ArticleDTO> allArticleList(Pageable pageable);
+
+    public Page<ArticleDTO> searchList(Pageable pageable,PageRequestDTO pageRequestDTO);
 
 }
