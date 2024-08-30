@@ -24,8 +24,8 @@ public class AlarmController {
     }
 
     @PostMapping("/alarms/{alarmId}/check")
-    public ResponseEntity<Void> checkAlarm(@PathVariable Long alarmId) {
-        alarmService.checkAlarm(alarmId);
+    public ResponseEntity<Void> checkAndDeleteAlarm(@PathVariable Long alarmId) {
+        alarmService.checkAndDeleteAlarm(alarmId);
         return ResponseEntity.ok().build();
     }
 

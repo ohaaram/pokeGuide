@@ -27,11 +27,14 @@ public class AlarmService {
         return alarmRepository.findByUidAndCheckedFalse(uid);
     }
 
-    public void checkAlarm(Long alarmId) {
-        Alarm alarm = alarmRepository.findById(alarmId).orElseThrow(() -> new IllegalArgumentException("Invalid alarm ID"));
-        alarm.setChecked(true);
-        alarmRepository.save(alarm);
+    // 알람 확인 후 삭제하는 메서드
+    public void checkAndDeleteAlarm(Long alarmId) {
+        alarmRepository.findById(alarmId).ifPresent(alarm -> {
+            alarm.setChecked(true);
+            alarmRepository.delete(alarm);
+        });
     }
+
 
     public void clearCheckedAlarms(String uid) {
         alarmRepository.deleteByUidAndCheckedTrue(uid);
