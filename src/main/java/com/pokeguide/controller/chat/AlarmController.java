@@ -23,11 +23,19 @@ public class AlarmController {
         return ResponseEntity.ok(alarmService.getUncheckedAlarms(uid));
     }
 
-    @PostMapping("/alarms/{alarmId}/check")
+    @DeleteMapping("/alarms/{alarmId}/check")
     public ResponseEntity<Void> checkAndDeleteAlarm(@PathVariable Long alarmId) {
         alarmService.checkAndDeleteAlarm(alarmId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/chatrooms/{chatNo}/enter")
+    public ResponseEntity<Void> enterChatRoom(@PathVariable int chatNo, @RequestParam String uid) {
+        // 해당 유저가 이 방에 들어왔을 때 알람 삭제
+        alarmService.deleteAlarmsByChatRoomAndUser(chatNo, uid);
+        return ResponseEntity.ok().build();
+    }
+
 
     @DeleteMapping("/alarms/checked")
     public ResponseEntity<Void> clearCheckedAlarms(@RequestParam String uid) {

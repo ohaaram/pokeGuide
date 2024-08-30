@@ -78,5 +78,4 @@ public class ChatService {
         socketIOService.sendMessageToRoom(String.valueOf(chatNo), "chat message", message);
     }
 
-
 }

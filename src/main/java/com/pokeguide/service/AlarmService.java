@@ -2,6 +2,7 @@ package com.pokeguide.service;
 
 import com.pokeguide.entity.Alarm;
 import com.pokeguide.repository.AlarmRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,12 @@ public class AlarmService {
 
     public void clearCheckedAlarms(String uid) {
         alarmRepository.deleteByUidAndCheckedTrue(uid);
+    }
+
+    @Transactional
+    public void deleteAlarmsByChatRoomAndUser(int chatNo, String uid) {
+        System.out.println("Deleting alarms for UID: " + uid + " in chatNo: " + chatNo); // 로그 추가
+        alarmRepository.deleteByChatNoAndUid(chatNo, uid);
     }
 
 }

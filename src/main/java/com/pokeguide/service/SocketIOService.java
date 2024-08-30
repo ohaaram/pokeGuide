@@ -32,11 +32,16 @@ public class SocketIOService {
 
     private ConnectListener onConnected() {
         return client -> {
+            // 모든 핸드셰이크 데이터를 로깅
+            System.out.println("Handshake data: " + client.getHandshakeData().getUrlParams());
+
             String uid = client.getHandshakeData().getSingleUrlParam("uid");
-            if (uid == null) {
-                System.err.println("Client connected with null UID");
+            String chatNo = client.getHandshakeData().getSingleUrlParam("chatNo");
+
+            if (uid == null || chatNo == null) {
+                System.err.println("Client connected with null UID or chatNo");
             } else {
-                System.out.println("Client connected with UID: " + uid);
+                System.out.println("Client connected with UID: " + uid + " and chatNo: " + chatNo);
             }
         };
     }
@@ -57,22 +62,30 @@ public class SocketIOService {
         };
     }
 
-
     private DataListener<String> onChatMessage() {
         return (client, message, ackSender) -> {
             String chatNo = client.getHandshakeData().getSingleUrlParam("chatNo");
-            if (chatNo == null) {
-                System.err.println("Chat number is null. Cannot proceed with sending the message.");
+            String uid = client.getHandshakeData().getSingleUrlParam("uid");
+
+            if (chatNo == null || uid == null) {
+                System.err.println("Chat number or UID is null. Cannot proceed with sending the message.");
                 return;
             }
 
-            System.out.println("Sending message to chatNo: " + chatNo);
+            System.out.println("Sending message to chatNo: " + chatNo + " from UID: " + uid);
+
+            // 메시지 전송
             server.getRoomOperations(chatNo).sendEvent("chat message", message);
+
+            // 해당 채팅방의 다른 사용자들에게 알림 전송
+            server.getRoomOperations(chatNo).getClients().forEach(otherClient -> {
+                String otherUid = otherClient.getHandshakeData().getSingleUrlParam("uid");
+                if (!uid.equals(otherUid)) {
+                    sendNotification(otherUid, "New message in chat " + chatNo);
+                }
+            });
         };
     }
-
-
-
 
 
     public void sendMessageToRoom(String chatNo, String event, Object data) {

@@ -10,5 +10,7 @@ import java.util.List;
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
     List<Alarm> findByUidAndCheckedFalse (String uid);
     void deleteByUidAndCheckedTrue(String uid);
+    void deleteByChatNoAndUid(int chatNo, String uid);
+
 
 }
